@@ -2,15 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 
-export default function Stepper({
-  max,
-  min = 0,
-  unit,
-  step,
-  value,
-  onIncrement,
-  onDecrement,
-}) {
+export default function Stepper({ unit, value, onIncrement, onDecrement }) {
   return (
     <View>
       <View>
