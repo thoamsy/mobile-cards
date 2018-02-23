@@ -52,42 +52,7 @@ export default class App extends React.Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="position">
-        {/* <AddEntry /> */}
-        <Switch
-          value={this.state.show}
-          onChange={() => this.setState(state => ({ show: !state.show }))}
-        />
-
-        <TextInput
-          value={this.state.value}
-          onChangeText={value => this.setState({ value })}
-          style={styles.input}
-          placeholder="sorry"
-        />
-
-        <ScrollView
-          maximumZoomScale={2}
-          style={{ backgroundColor: '#24a48e' }}
-          pagingEnabled
-        >
-          <Text style={{ fontSize: 50 }}>hello</Text>
-        </ScrollView>
-        <Picker>
-          <Picker.Item label="Java" value="java" />
-          <Picker.Item label="JavaScript" value="js" />
-        </Picker>
-
-        <TouchableHighlight onPress={() => {}}>
-          <View style={{ backgroundColor: '#2196f3' }}>
-            <Text>nihao</Text>
-          </View>
-        </TouchableHighlight>
-
-        <TouchableOpacity onPress={() => {}}>
-          <View style={{ backgroundColor: '#2196f3' }}>
-            <Text>Shit</Text>
-          </View>
-        </TouchableOpacity>
+        <AddEntry />
       </KeyboardAvoidingView>
     );
   }
