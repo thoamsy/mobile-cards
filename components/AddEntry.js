@@ -7,6 +7,9 @@ import DateHaeder from './DateHeader';
 import { Ionicons } from '@expo/vector-icons';
 import TextButton from './TextButton';
 import { submitEntry, removeEntry } from '../utils/api';
+import { connect } from 'react-redux';
+import { addEntry } from '../actions';
+import { getDailyRemainderValue } from '../utils/helper';
 
 const SubmitBtn = ({ onPress }) => (
   <TouchableOpacity onPress={onPress} style={{ backgroundColor: 'red' }}>
@@ -14,7 +17,7 @@ const SubmitBtn = ({ onPress }) => (
   </TouchableOpacity>
 );
 
-export default class AddEntry extends Component {
+class AddEntry extends Component {
   state = {
     run: 0,
     bike: 0,
@@ -43,12 +46,22 @@ export default class AddEntry extends Component {
 
   onReset = () => {
     const key = timeToString();
+    this.props.dispatch(
+      addEntry({
+        [key]: getDailyRemainderValue(),
+      })
+    );
     removeEntry(key);
   };
 
   onSubmit = () => {
     const key = timeToString();
     const entry = this.state;
+    this.props.dispatch(
+      addEntry({
+        [key]: entry,
+      })
+    );
     this.setState({
       run: 0,
       bike: 0,
@@ -60,8 +73,6 @@ export default class AddEntry extends Component {
   };
 
   render() {
-    const metaInfo = getMetricMetaInfo();
-
     if (this.props.alreadyLogged) {
       return (
         <View>
@@ -71,6 +82,8 @@ export default class AddEntry extends Component {
         </View>
       );
     }
+    const metaInfo = getMetricMetaInfo();
+
     return (
       <View>
         <DateHaeder date={new Date().toLocaleDateString()} />
@@ -102,3 +115,11 @@ export default class AddEntry extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  const key = timeToString();
+  return {
+    alreadyLogged: state[key] && state[key].today === undefined,
+  };
+};
+export default connect(mapStateToProps)(AddEntry);

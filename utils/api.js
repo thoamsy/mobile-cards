@@ -20,6 +20,6 @@ export function removeEntry(key) {
       );
     })
     .then(data => {
-      AsyncStorage.setItem(CALENDAR_STORAGE_KEY, data);
+      AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(data));
     });
 }
