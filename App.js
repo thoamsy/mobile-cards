@@ -51,9 +51,9 @@ export default class App extends React.Component {
   };
   render() {
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="position">
+      <View>
         <AddEntry />
-      </KeyboardAvoidingView>
+      </View>
     );
   }
 }

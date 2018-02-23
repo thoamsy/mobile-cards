@@ -1,7 +1,14 @@
 import React from 'react';
 import { View, Text, Slider } from 'react-native';
 
-export default function UdacSlider({ max, min = 0, unit, step, value, onChange }) {
+export default function UdacSlider({
+  max,
+  min = 0,
+  unit,
+  step,
+  value,
+  onChange,
+}) {
   return (
     <View>
       <Slider

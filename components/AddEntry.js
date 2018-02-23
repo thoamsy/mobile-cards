@@ -23,16 +23,16 @@ export default class AddEntry extends Component {
     eat: 0,
   };
 
-  increment = metric => {
+  increment = metric => () => {
     const { max, step } = getMetricMetaInfo(metric);
     this.setState(state => ({
-      [metric]: Math.min(max, state.metric + step),
+      [metric]: Math.min(max, state[metric] + step),
     }));
   };
-  decrement = metric => {
+  decrement = metric => () => {
     const { step } = getMetricMetaInfo(metric);
     this.setState(state => ({
-      [metric]: Math.max(0, state.metric - step),
+      [metric]: Math.max(0, state[metric] - step),
     }));
   };
   slide = (metric, value) => {
@@ -89,8 +89,8 @@ export default class AddEntry extends Component {
               ) : (
                 <Stepper
                   value={value}
-                  onIncrement={() => this.increment(key)}
-                  onDecrement={() => this.decrement(key)}
+                  onIncrement={this.increment(key)}
+                  onDecrement={this.decrement(key)}
                   {...rest}
                 />
               )}
