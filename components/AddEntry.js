@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+} from 'react-native';
 import { getMetricMetaInfo, timeToString } from '../utils/helper';
 import Slider from './Slider';
 import Stepper from './Stepper';
@@ -10,10 +16,61 @@ import { submitEntry, removeEntry } from '../utils/api';
 import { connect } from 'react-redux';
 import { addEntry } from '../actions';
 import { getDailyRemainderValue } from '../utils/helper';
+import { white, purple } from '../utils/colors';
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: white,
+  },
+  iosSubmitButton: {
+    backgroundColor: purple,
+    borderRadius: 8,
+    height: 45,
+    marginLeft: 40,
+    marginRight: 40,
+    padding: 8,
+  },
+  androidSubmitButton: {
+    backgroundColor: purple,
+    borderRadius: 2,
+    height: 45,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  submitButtonText: {
+    color: 'white',
+    fontSize: 22,
+    textAlign: 'center',
+  },
+  row: {
+    flexDirection: 'row',
+    flex: 1,
+    alignItems: 'center',
+  },
+  center: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 30,
+    marginRight: 30,
+  },
+});
 const SubmitBtn = ({ onPress }) => (
-  <TouchableOpacity onPress={onPress} style={{ backgroundColor: 'red' }}>
-    <Text>Submit</Text>
+  <TouchableOpacity
+    onPress={onPress}
+    style={
+      Platform.OS === 'ios'
+        ? styles.iosSubmitButton
+        : styles.androidSubmitButton
+    }
+  >
+    <Text style={styles.submitButtonText}>Submit</Text>
   </TouchableOpacity>
 );
 
@@ -75,8 +132,11 @@ class AddEntry extends Component {
   render() {
     if (this.props.alreadyLogged) {
       return (
-        <View>
-          <Ionicons name="ios-happy-outline" size={100} />
+        <View style={styles.center}>
+          <Ionicons
+            name={Platform.OS === 'ios' ? 'ios-happy-outline' : 'md-happy'}
+            size={100}
+          />
           <Text>You already logged your information for today.</Text>
           <TextButton onPress={this.onReset}> Reset </TextButton>
         </View>
@@ -85,14 +145,14 @@ class AddEntry extends Component {
     const metaInfo = getMetricMetaInfo();
 
     return (
-      <View>
+      <View style={styles.container}>
         <DateHaeder date={new Date().toLocaleDateString()} />
         {Object.keys(metaInfo).map(key => {
-          const { icon, type, ...rest } = metaInfo[key];
+          const { icon: Icon, type, ...rest } = metaInfo[key];
           const value = this.state[key];
           return (
-            <View key={key}>
-              {icon}
+            <View key={key} style={styles.row}>
+              <Icon />
               {type === 'slider' ? (
                 <Slider
                   value={value}

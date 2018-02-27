@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, Slider } from 'react-native';
+import { View, Text, Slider, StyleSheet } from 'react-native';
+import { gray } from '../utils/colors';
 
 export default function UdacSlider({
   max,
@@ -10,8 +11,9 @@ export default function UdacSlider({
   onChange,
 }) {
   return (
-    <View>
+    <View style={styles.row}>
       <Slider
+        style={{ flex: 1 }}
         step={step}
         value={value}
         maximumValue={max}
@@ -19,9 +21,21 @@ export default function UdacSlider({
         onValueChange={onChange}
       />
       <View>
-        <Text>{value}</Text>
-        <Text>{unit}</Text>
+        <Text style={{ fontSize: 24, textAlign: 'center' }}>{value}</Text>
+        <Text style={{ fontSize: 18, color: gray }}>{unit}</Text>
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    flex: 1,
+    alignItems: 'center',
+  },
+  metricCounter: {
+    width: 85,
+    justifyContent: 'center',
+  },
+});

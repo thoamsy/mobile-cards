@@ -69,7 +69,7 @@ export function getMetricMetaInfo(metric) {
       unit: 'miles',
       step: 1,
       type: 'steppers',
-      get icon() {
+      icon() {
         return (
           <View style={[styles.iconContainer, { backgroundColor: red }]}>
             <MaterialIcons name="directions-run" color={white} size={35} />
@@ -83,7 +83,7 @@ export function getMetricMetaInfo(metric) {
       unit: 'miles',
       step: 1,
       type: 'steppers',
-      get icon() {
+      icon() {
         return (
           <View style={[styles.iconContainer, { backgroundColor: orange }]}>
             <MaterialCommunityIcons name="bike" color={white} size={35} />
@@ -97,7 +97,7 @@ export function getMetricMetaInfo(metric) {
       unit: 'meter',
       step: 1,
       type: 'steppers',
-      get icon() {
+      icon() {
         return (
           <View style={[styles.iconContainer, { backgroundColor: blue }]}>
             <MaterialCommunityIcons name="swim" color={white} size={35} />
@@ -111,7 +111,7 @@ export function getMetricMetaInfo(metric) {
       unit: 'hour',
       step: 1,
       type: 'slider',
-      get icon() {
+      icon() {
         return (
           <View style={[styles.iconContainer, { backgroundColor: purple }]}>
             <FontAwesome name="bed" color={white} size={35} />
@@ -125,7 +125,7 @@ export function getMetricMetaInfo(metric) {
       unit: 'rating',
       step: 1,
       type: 'slider',
-      get icon() {
+      icon() {
         return (
           <View style={[styles.iconContainer, { backgroundColor: pink }]}>
             <MaterialCommunityIcons name="food" color={white} size={35} />
