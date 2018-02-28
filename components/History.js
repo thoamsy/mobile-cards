@@ -1,5 +1,6 @@
+// @ts-nocheck
 import React, { Component } from 'react';
-import { View, Text, Platform, TouchableOpacity } from 'react-native';
+import { View, Platform, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { receiveEntries, addEntry } from '../actions';
 import { timeToString, getDailyRemainderValue } from '../utils/helper';
@@ -10,9 +11,9 @@ import MetricCard from './MetricCard';
 import { AppLoading } from 'expo';
 import styled from 'styled-components/native';
 
-const theRadius = Platform.OS === 'ios' ? 16 : 2;
 const MetricCardView = styled.View`
   background-color: white;
+  border-radius: ${Platform.OS === 'ios' ? 16 : 2};
   padding: 20px;
   margin-left: 10px;
   margin-right: 10px;
@@ -59,7 +60,13 @@ class History extends Component {
           <NoDateText>{today}</NoDateText>
         </View>
       ) : (
-        <TouchableOpacity onPress={() => console.log('Yeah!')}>
+        <TouchableOpacity
+          onPress={() =>
+            this.props.navigation.navigate('EntryDetail', {
+              entryId: key,
+            })
+          }
+        >
           <MetricCard metrics={metrics} date={formattedDate} />
         </TouchableOpacity>
       )}

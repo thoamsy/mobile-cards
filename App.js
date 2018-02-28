@@ -1,63 +1,82 @@
+// @ts-nocheck
 import React from 'react';
 import History from './components/History';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Switch,
-  KeyboardAvoidingView,
-  Picker,
-  Button,
-  TouchableHighlight,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import { View, Platform, StatusBar } from 'react-native';
 import AddEntry from './components/AddEntry';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducers';
+import { TabNavigator, StackNavigator } from 'react-navigation';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import { white, purple } from './utils/colors';
+import { Constants } from 'expo';
+import EntryDetail from './components/EntryDetail';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginLeft: 10,
-    marginRight: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+const Tabs = TabNavigator(
+  {
+    History: {
+      screen: History,
+      navigationOptions: {
+        tabBarLabel: 'History',
+        tabBarIcon: ({ tintColor }) => (
+          <Ionicons name="ios-bookmarks" size={30} color={tintColor} />
+        ),
+      },
+    },
+    AddEntry: {
+      screen: AddEntry,
+      navigationOptions: {
+        tabBarLabel: 'Add Entry',
+        tabBarIcon: ({ tintColor }) => (
+          <FontAwesome name="plus-square" size={30} color={tintColor} />
+        ),
+      },
+    },
   },
-  btn: {
-    backgroundColor: '#e53224',
-    padding: 10,
-    paddingLeft: 50,
-    paddingRight: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 5,
+  {
+    tabBarOptions: {
+      activeTintColor: Platform.OS === 'ios' ? purple : white,
+      style: {
+        height: 56,
+        backgroundColor: Platform.OS === 'ios' ? white : purple,
+        shadowColor: `rgba(0,0,0,.24)`,
+        shadowOffset: {
+          width: 3,
+          height: 0,
+        },
+        shadowRadius: 6,
+        shadowOpacity: 1,
+      },
+    },
+    navigationOptions: {
+      header: null,
+    },
+  }
+);
+
+const MainNavigator = StackNavigator({
+  Home: {
+    screen: Tabs,
   },
-  btnText: {
-    color: '#fff',
-  },
-  input: {
-    width: 200,
-    height: 44,
-    padding: 8,
-    borderWidth: 1,
-    borderColor: '#757575',
-    margin: 50,
+  EntryDetail: {
+    screen: EntryDetail,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      },
+    },
   },
 });
-
 export default class App extends React.Component {
-  state = {
-    value: 'let us say something',
-    show: false,
-  };
   render() {
     return (
       <Provider store={createStore(reducer)}>
         <View style={{ flex: 1 }}>
-          <History />
+          <View style={{ height: Constants.statusBarHeight }}>
+            <StatusBar translucent />
+          </View>
+          <MainNavigator />
         </View>
       </Provider>
     );
