@@ -1,4 +1,5 @@
 import React from 'react';
+import History from './components/History';
 import {
   StyleSheet,
   Text,
@@ -56,7 +57,7 @@ export default class App extends React.Component {
     return (
       <Provider store={createStore(reducer)}>
         <View style={{ flex: 1 }}>
-          <AddEntry />
+          <History />
         </View>
       </Provider>
     );
