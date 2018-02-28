@@ -1,23 +1,24 @@
 // @ts-nocheck
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View } from 'react-native';
 import DateHeader from './DateHeader';
 import { gray } from '../utils/colors';
 import { getMetricMetaInfo } from '../utils/helper';
+import styled from 'styled-components/native';
+
+const MetricItem = styled.View`
+  flex-direction: row;
+  margin-top: 12px;
+`;
 
 export default function MetricCard({ date, metrics }) {
   return (
     <View>
       {date && <DateHeader date={date} />}
       {Object.entries(metrics).map(([metric, value]) => {
-        const {
-          displayName,
-          unit,
-          icon: Icon,
-          backgroundColor,
-        } = getMetricMetaInfo(metric);
+        const { displayName, unit, icon: Icon } = getMetricMetaInfo(metric);
         return (
-          <View style={styles.metric} key={metric}>
+          <MetricItem key={metric}>
             <Icon />
             <View>
               <Text style={{ fontSize: 20 }}>{displayName}</Text>
@@ -25,16 +26,9 @@ export default function MetricCard({ date, metrics }) {
                 {value} {unit}
               </Text>
             </View>
-          </View>
+          </MetricItem>
         );
       })}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  metric: {
-    flexDirection: 'row',
-    marginTop: 12,
-  },
-});
