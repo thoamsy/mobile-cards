@@ -1,16 +1,18 @@
 // @ts-nocheck
 import React from 'react';
-import History from './components/History';
 import { View, Platform, StatusBar } from 'react-native';
-import AddEntry from './components/AddEntry';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import reducer from './reducers';
+import { Constants } from 'expo';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
+
+import reducer from './reducers';
 import { white, purple } from './utils/colors';
-import { Constants } from 'expo';
+import History from './components/History';
+import AddEntry from './components/AddEntry';
 import EntryDetail from './components/EntryDetail';
+import LiveRecord from './components/LiveRecord';
 
 const Tabs = TabNavigator(
   {
@@ -29,6 +31,15 @@ const Tabs = TabNavigator(
         tabBarLabel: 'Add Entry',
         tabBarIcon: ({ tintColor }) => (
           <FontAwesome name="plus-square" size={30} color={tintColor} />
+        ),
+      },
+    },
+    LiveRecord: {
+      screen: LiveRecord,
+      navigationOptions: {
+        tabBarLabel: 'Live',
+        tabBarIcon: ({ tintColor }) => (
+          <Ionicons name="ios-speedometer" size={30} color={tintColor} />
         ),
       },
     },

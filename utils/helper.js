@@ -81,7 +81,7 @@ export function getMetricMetaInfo(metric) {
       displayName: 'Bike',
       max: 100,
       unit: 'miles',
-      step: 1,
+      step: 100,
       type: 'steppers',
       icon() {
         return (
@@ -95,7 +95,7 @@ export function getMetricMetaInfo(metric) {
       displayName: 'Swim',
       max: 9999,
       unit: 'meter',
-      step: 1,
+      step: 100,
       type: 'steppers',
       icon() {
         return (

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Text, Platform } from 'react-native';
-import styled from 'styled-components/native';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
@@ -13,42 +12,13 @@ import { submitEntry, removeEntry } from '../utils/api';
 import { getMetricMetaInfo, timeToString } from '../utils/helper';
 import { addEntry } from '../actions';
 import { getDailyRemainderValue } from '../utils/helper';
-
-const Container = styled.View`
-  flex: 1;
-  padding: 20px;
-  background-color: white;
-`;
-const SubmitButton = styled.TouchableOpacity`
-  background-color: purple;
-  border-radius: ${({ ios }) => (ios ? '8px' : '2px')};
-  height: 45px;
-  padding: 10px;
-  margin: ${({ ios }) => (ios ? '0 40px' : '0')};
-`;
-const SubmitText = styled.Text`
-  color: white;
-  font-size: 22;
-  text-align: center;
-`;
-
-const CenterView = styled.View`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  margin: 0 30px;
-`;
-const EntryView = styled.View`
-  flex-direction: row;
-  flex: 1;
-  align-items: center;
-`;
-
-const SubmitBtn = ({ onPress }) => (
-  <SubmitButton onPress={onPress} ios={Platform.OS === 'ios'}>
-    <SubmitText>Submit</SubmitText>
-  </SubmitButton>
-);
+import {
+  Container,
+  SubmitButton,
+  SubmitText,
+  CenterView,
+  EntryView,
+} from './Genernal';
 
 class AddEntry extends Component {
   state = {
@@ -156,7 +126,9 @@ class AddEntry extends Component {
             </EntryView>
           );
         })}
-        <SubmitBtn onPress={this.onSubmit} />
+        <SubmitButton onPress={this.onSubmit} ios={Platform.OS === 'ios'}>
+          <SubmitText>Submit</SubmitText>
+        </SubmitButton>
       </Container>
     );
   }
