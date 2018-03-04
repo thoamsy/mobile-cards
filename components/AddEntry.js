@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Platform,
-} from 'react-native';
+import { Text, Platform } from 'react-native';
+import styled from 'styled-components/native';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
@@ -18,62 +13,41 @@ import { submitEntry, removeEntry } from '../utils/api';
 import { getMetricMetaInfo, timeToString } from '../utils/helper';
 import { addEntry } from '../actions';
 import { getDailyRemainderValue } from '../utils/helper';
-import { white, purple } from '../utils/colors';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: white,
-  },
-  iosSubmitButton: {
-    backgroundColor: purple,
-    borderRadius: 8,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40,
-    padding: 8,
-  },
-  androidSubmitButton: {
-    backgroundColor: purple,
-    borderRadius: 2,
-    height: 45,
-    padding: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    alignSelf: 'flex-end',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  submitButtonText: {
-    color: 'white',
-    fontSize: 22,
-    textAlign: 'center',
-  },
-  row: {
-    flexDirection: 'row',
-    flex: 1,
-    alignItems: 'center',
-  },
-  center: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft: 30,
-    marginRight: 30,
-  },
-});
+const Container = styled.View`
+  flex: 1;
+  padding: 20px;
+  background-color: white;
+`;
+const SubmitButton = styled.TouchableOpacity`
+  background-color: purple;
+  border-radius: ${({ ios }) => (ios ? '8px' : '2px')};
+  height: 45px;
+  padding: 10px;
+  margin: ${({ ios }) => (ios ? '0 40px' : '0')};
+`;
+const SubmitText = styled.Text`
+  color: white;
+  font-size: 22;
+  text-align: center;
+`;
+
+const CenterView = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  margin: 0 30px;
+`;
+const EntryView = styled.View`
+  flex-direction: row;
+  flex: 1;
+  align-items: center;
+`;
+
 const SubmitBtn = ({ onPress }) => (
-  <TouchableOpacity
-    onPress={onPress}
-    style={
-      Platform.OS === 'ios'
-        ? styles.iosSubmitButton
-        : styles.androidSubmitButton
-    }
-  >
-    <Text style={styles.submitButtonText}>Submit</Text>
-  </TouchableOpacity>
+  <SubmitButton onPress={onPress} ios={Platform.OS === 'ios'}>
+    <SubmitText>Submit</SubmitText>
+  </SubmitButton>
 );
 
 class AddEntry extends Component {
@@ -144,26 +118,26 @@ class AddEntry extends Component {
   render() {
     if (this.props.alreadyLogged) {
       return (
-        <View style={styles.center}>
+        <CenterView>
           <Ionicons
             name={Platform.OS === 'ios' ? 'ios-happy-outline' : 'md-happy'}
             size={100}
           />
           <Text>You already logged your information for today.</Text>
           <TextButton onPress={this.onReset}> Reset </TextButton>
-        </View>
+        </CenterView>
       );
     }
     const metaInfo = getMetricMetaInfo();
 
     return (
-      <View style={styles.container}>
+      <Container>
         <DateHaeder date={new Date().toLocaleDateString()} />
         {Object.keys(metaInfo).map(key => {
           const { icon: Icon, type, ...rest } = metaInfo[key];
           const value = this.state[key];
           return (
-            <View key={key} style={styles.row}>
+            <EntryView key={key}>
               <Icon />
               {type === 'slider' ? (
                 <Slider
@@ -179,11 +153,11 @@ class AddEntry extends Component {
                   {...rest}
                 />
               )}
-            </View>
+            </EntryView>
           );
         })}
         <SubmitBtn onPress={this.onSubmit} />
-      </View>
+      </Container>
     );
   }
 }
