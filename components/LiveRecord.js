@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import styled from 'styled-components/native';
 import { Foundation } from '@expo/vector-icons';
+import { Location, Permissions } from 'expo';
 
+import { calculateDirection } from '../utils/helper';
 import { CenterView, Button, ButtonText } from './Genernal';
 
 const Container = styled.View`
@@ -21,7 +23,7 @@ const SubTitle = Title.extend`
   margin-top: 5px;
 `;
 const Direction = Title.extend`
-  font-size: 120px;
+  font-size: 60px;
   color: purple;
 `;
 const MetricContainer = styled.View`
@@ -45,10 +47,49 @@ const MetricSubTitle = SubTitle.extend`
 export default class Live extends Component {
   state = {
     coords: null,
-    status: 'wow',
+    status: null,
     direction: '',
   };
 
+  componentDidMount() {
+    this.getPermission();
+  }
+
+  permissionWithLocation = way => () => {
+    Permissions[way](Permissions.LOCATION)
+      .then(({ status }) => {
+        if (status === 'granted') {
+          return this.setLocation();
+        }
+        this.setState({ status });
+      })
+      .catch(error => {
+        console.warn('Error getting location permission', error);
+        this.setState({
+          status: 'undetermined',
+        });
+      });
+  };
+
+  askPermission = this.permissionWithLocation('askAsync');
+  getPermission = this.permissionWithLocation('getAsync');
+  setLocation = () => {
+    Location.watchPositionAsync(
+      {
+        enableHighAccuracy: true,
+        timeInterval: 2,
+        distanceInterval: 1,
+      },
+      ({ coords }) => {
+        const newDirection = calculateDirection(coords.heading);
+        this.setState({
+          coords,
+          direction: newDirection,
+          status: 'granted',
+        });
+      }
+    );
+  };
   render() {
     const { status, coords, direction } = this.state;
     switch (status) {
@@ -69,7 +110,7 @@ export default class Live extends Component {
           <CenterView>
             <Foundation name="alert" size={50} />
             <Text>You need to enable location services for this app.</Text>
-            <Button onPress={() => {}}>
+            <Button onPress={this.askPermission}>
               <ButtonText>Enable</ButtonText>
             </Button>
           </CenterView>
@@ -79,16 +120,20 @@ export default class Live extends Component {
           <Container>
             <DirectionContainer>
               <Title>You're Heading</Title>
-              <Direction>West</Direction>
+              <Direction>{direction}</Direction>
             </DirectionContainer>
             <MetricContainer>
               <MetricItem>
                 <MetricTitle>Altitude</MetricTitle>
-                <MetricSubTitle>200 feets</MetricSubTitle>
+                <MetricSubTitle>
+                  {Math.round(coords.altitude * 3.2808)} Feet
+                </MetricSubTitle>
               </MetricItem>
               <MetricItem>
                 <MetricTitle>Speed</MetricTitle>
-                <MetricSubTitle>100M/s</MetricSubTitle>
+                <MetricSubTitle>
+                  {(coords.speed * 2.2369).toFixed(1)} MPH
+                </MetricSubTitle>
               </MetricItem>
             </MetricContainer>
           </Container>
