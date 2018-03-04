@@ -6,14 +6,16 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native';
-import { getMetricMetaInfo, timeToString } from '../utils/helper';
+import { Ionicons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
+
 import Slider from './Slider';
 import Stepper from './Stepper';
 import DateHaeder from './DateHeader';
-import { Ionicons } from '@expo/vector-icons';
 import TextButton from './TextButton';
 import { submitEntry, removeEntry } from '../utils/api';
-import { connect } from 'react-redux';
+import { getMetricMetaInfo, timeToString } from '../utils/helper';
 import { addEntry } from '../actions';
 import { getDailyRemainderValue } from '../utils/helper';
 import { white, purple } from '../utils/colors';
@@ -108,6 +110,7 @@ class AddEntry extends Component {
         [key]: getDailyRemainderValue(),
       })
     );
+    this.toHome();
     removeEntry(key);
   };
 
@@ -126,7 +129,16 @@ class AddEntry extends Component {
       sleep: 0,
       eat: 0,
     });
+    this.toHome();
     submitEntry({ key, entry });
+  };
+
+  toHome = () => {
+    this.props.navigation.dispatch(
+      NavigationActions.back({
+        key: 'AddEntry',
+      })
+    );
   };
 
   render() {
