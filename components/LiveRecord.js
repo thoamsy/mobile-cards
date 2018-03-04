@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { Text, ActivityIndicator, Animated } from 'react-native';
 import styled from 'styled-components/native';
 import { Foundation } from '@expo/vector-icons';
 import { Location, Permissions } from 'expo';
@@ -22,10 +22,11 @@ const SubTitle = Title.extend`
   font-size: 25px;
   margin-top: 5px;
 `;
-const Direction = Title.extend`
+const Direction = Animated.createAnimatedComponent(Title.extend`
   font-size: 60px;
   color: purple;
-`;
+`);
+
 const MetricContainer = styled.View`
   flex-direction: row;
   justify-content: space-around;
@@ -49,6 +50,7 @@ export default class Live extends Component {
     coords: null,
     status: null,
     direction: '',
+    bounceValue: new Animated.Value(1),
   };
 
   componentDidMount() {
@@ -82,16 +84,24 @@ export default class Live extends Component {
       },
       ({ coords }) => {
         const newDirection = calculateDirection(coords.heading);
-        this.setState({
-          coords,
-          direction: newDirection,
-          status: 'granted',
+        this.setState(({ direction, bounceValue }) => {
+          if (direction !== newDirection) {
+            Animated.sequence([
+              Animated.timing(bounceValue, { duration: 200, toValue: 1.04 }),
+              Animated.spring(bounceValue, { toValue: 1, friction: 4 }),
+            ]).start();
+          }
+          return {
+            coords,
+            direction: newDirection,
+            status: 'granted',
+          };
         });
       }
     );
   };
   render() {
-    const { status, coords, direction } = this.state;
+    const { status, coords, direction, bounceValue } = this.state;
     switch (status) {
       case null:
         return <ActivityIndicator />;
@@ -120,7 +130,9 @@ export default class Live extends Component {
           <Container>
             <DirectionContainer>
               <Title>You're Heading</Title>
-              <Direction>{direction}</Direction>
+              <Direction style={[{ transform: [{ scale: bounceValue }] }]}>
+                {direction}
+              </Direction>
             </DirectionContainer>
             <MetricContainer>
               <MetricItem>
