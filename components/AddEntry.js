@@ -9,7 +9,12 @@ import Stepper from './Stepper';
 import DateHaeder from './DateHeader';
 import TextButton from './TextButton';
 import { submitEntry, removeEntry } from '../utils/api';
-import { getMetricMetaInfo, timeToString } from '../utils/helper';
+import {
+  getMetricMetaInfo,
+  timeToString,
+  setNotification,
+  clearNotification,
+} from '../utils/helper';
 import { addEntry } from '../actions';
 import { getDailyRemainderValue } from '../utils/helper';
 import {
@@ -75,6 +80,7 @@ class AddEntry extends Component {
     });
     this.toHome();
     submitEntry({ key, entry });
+    clearNotification.then(setNotification);
   };
 
   toHome = () => {

@@ -13,6 +13,7 @@ import History from './components/History';
 import AddEntry from './components/AddEntry';
 import EntryDetail from './components/EntryDetail';
 import LiveRecord from './components/LiveRecord';
+import { setNotification } from './utils/helper';
 
 const Tabs = TabNavigator(
   {
@@ -80,6 +81,10 @@ const MainNavigator = StackNavigator({
   },
 });
 export default class App extends React.Component {
+  componentDidMount = () => {
+    setNotification();
+  };
+
   render() {
     return (
       <Provider store={createStore(reducer)}>

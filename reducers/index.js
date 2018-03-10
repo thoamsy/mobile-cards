@@ -1,8 +1,8 @@
 import { RECEIVE_ENTRIES, ADD_ENTRY } from '../actions';
-import { propOr, identity, merge } from 'ramda';
+import { getOr, identity, merge } from 'lodash/fp'
 
 export const createReducer = (inital, handlers) => (state = inital, action) =>
-  propOr(identity, action.type, handlers)(state, action);
+  getOr(identity, action.type, handlers)(state, action);
 
 const handlers = {
   [RECEIVE_ENTRIES](state, action) {

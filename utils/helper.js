@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, AsyncStorage } from 'react-native';
 import {
   FontAwesome,
   MaterialCommunityIcons,
   MaterialIcons,
 } from '@expo/vector-icons';
-import { white, red, orange, blue, lightPurp, pink, purple } from './colors';
+import { white, red, orange, blue, pink, purple } from './colors';
+import { Notifications, Permissions } from 'expo';
 
 const styles = StyleSheet.create({
   iconContainer: {
@@ -18,6 +19,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
 });
+
 export function isBetween(num, x, y) {
   if (num >= x && num <= y) {
     return true;
@@ -140,3 +142,42 @@ export function getMetricMetaInfo(metric) {
 export const getDailyRemainderValue = () => ({
   today: `👋🏻 Don't forget to log your data today!`,
 });
+
+const NOTIFICATION_KEY = 'NOTIFICATION_KEY';
+export const clearNotification = () => {
+  return AsyncStorage.removeItem(NOTIFICATION_KEY).then(
+    Notifications.cancelAllScheduledNotificationsAsync
+  );
+};
+const createNotification = {
+  title: 'Log your stats!',
+  body: `👋🏻 Don't forget to log your stats for today!`,
+  ios: {
+    sound: true,
+  },
+  android: {
+    sound: true,
+    priority: 'high',
+    sticky: false,
+    vibrate: true,
+  },
+};
+export const setNotification = async () => {
+  const item = JSON.parse(await AsyncStorage.getItem(NOTIFICATION_KEY));
+  if (item !== null) return;
+
+  const status = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+  if (status === 'granted') {
+    Notifications.cancelAllScheduledNotificationsAsync();
+    let tomorrow = new Date();
+    tomorrow.setDate(tomorrow + 1);
+    tomorrow.setHours(13);
+    tomorrow.setMinutes(32);
+
+    Notifications.scheduleLocalNotificationAsync(createNotification, {
+      time: tomorrow,
+      repeat: 'day',
+    });
+    AsyncStorage.setItem(NOTIFICATION_KEY, 'true');
+  }
+};
