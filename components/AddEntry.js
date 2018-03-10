@@ -78,9 +78,10 @@ class AddEntry extends Component {
       sleep: 0,
       eat: 0,
     });
-    this.toHome();
     submitEntry({ key, entry });
-    clearNotification.then(setNotification);
+    clearNotification()
+      .then(setNotification)
+      .then(this.toHome);
   };
 
   toHome = () => {

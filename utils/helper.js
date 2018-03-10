@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, StyleSheet, AsyncStorage } from 'react-native';
+import { AsyncStorage } from 'react-native';
+import styled from 'styled-components';
 import {
   FontAwesome,
   MaterialCommunityIcons,
@@ -8,17 +9,16 @@ import {
 import { white, red, orange, blue, pink, purple } from './colors';
 import { Notifications, Permissions } from 'expo';
 
-const styles = StyleSheet.create({
-  iconContainer: {
-    padding: 5,
-    borderRadius: 8,
-    width: 50,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 20,
-  },
-});
+const IconView = styled.View`
+  padding: 5px;
+  border-radius: 8px;
+  width: 50px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+`;
 
 export function isBetween(num, x, y) {
   if (num >= x && num <= y) {
@@ -73,9 +73,9 @@ export function getMetricMetaInfo(metric) {
       type: 'steppers',
       icon() {
         return (
-          <View style={[styles.iconContainer, { backgroundColor: red }]}>
+          <IconView backgroundColor={red}>
             <MaterialIcons name="directions-run" color={white} size={35} />
-          </View>
+          </IconView>
         );
       },
     },
@@ -83,13 +83,13 @@ export function getMetricMetaInfo(metric) {
       displayName: 'Bike',
       max: 100,
       unit: 'miles',
-      step: 100,
+      step: 1,
       type: 'steppers',
       icon() {
         return (
-          <View style={[styles.iconContainer, { backgroundColor: orange }]}>
+          <IconView backgroundColor={orange}>
             <MaterialCommunityIcons name="bike" color={white} size={35} />
-          </View>
+          </IconView>
         );
       },
     },
@@ -97,13 +97,13 @@ export function getMetricMetaInfo(metric) {
       displayName: 'Swim',
       max: 9999,
       unit: 'meter',
-      step: 100,
+      step: 10,
       type: 'steppers',
       icon() {
         return (
-          <View style={[styles.iconContainer, { backgroundColor: blue }]}>
+          <IconView backgroundColor={blue}>
             <MaterialCommunityIcons name="swim" color={white} size={35} />
-          </View>
+          </IconView>
         );
       },
     },
@@ -115,9 +115,9 @@ export function getMetricMetaInfo(metric) {
       type: 'slider',
       icon() {
         return (
-          <View style={[styles.iconContainer, { backgroundColor: purple }]}>
+          <IconView backgroundColor={purple}>
             <FontAwesome name="bed" color={white} size={35} />
-          </View>
+          </IconView>
         );
       },
     },
@@ -129,9 +129,9 @@ export function getMetricMetaInfo(metric) {
       type: 'slider',
       icon() {
         return (
-          <View style={[styles.iconContainer, { backgroundColor: pink }]}>
+          <IconView backgroundColor={pink}>
             <MaterialCommunityIcons name="food" color={white} size={35} />
-          </View>
+          </IconView>
         );
       },
     },

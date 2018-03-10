@@ -2,14 +2,15 @@
 import React, { Component } from 'react';
 import { View, Platform, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
+import Calendar from 'udacifitness-calendar';
+import { AppLoading } from 'expo';
+import styled from 'styled-components';
+
 import { receiveEntries, addEntry } from '../actions';
 import { timeToString, getDailyRemainderValue } from '../utils/helper';
 import { fetchCalendarResults } from '../utils/api';
-import Calendar from 'udacifitness-calendar';
 import DateHeader from './DateHeader';
 import MetricCard from './MetricCard';
-import { AppLoading } from 'expo';
-import styled from 'styled-components/native';
 
 const MetricCardView = styled.View`
   background-color: white;
@@ -94,6 +95,7 @@ class History extends Component {
 }
 
 function mapStateToProps(state) {
+  // 其实这种方式的效率非常低……
   return { entries: state };
 }
 export default connect(mapStateToProps)(History);
