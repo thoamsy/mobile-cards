@@ -13,7 +13,6 @@ const CenterKeyboardAvoidingView = styled.KeyboardAvoidingView`
 const SubmitButton = styled.TouchableOpacity`
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.84);
-  text-align: center;
   padding: 10px;
 `;
 

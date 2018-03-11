@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { set } from 'lodash/fp';
 import {
   CenterKeyboardAvoidingView,
   SubmitButton,
@@ -6,16 +7,20 @@ import {
   SubmitText,
   TextInput,
 } from './general';
+import { saveDeckTitle, getDecks } from '../storage';
 
 export default class AddCardDeck extends Component {
   state = {
     cardDeckTitle: '',
   };
+
   onChangeTitle = text => {
     this.setState({ cardDeckTitle: text });
   };
   onInputDone = () => {
-    alert(13);
+    saveDeckTitle(this.state.cardDeckTitle)
+      .then(this.setState(set('cardDeckTitle', '')))
+      .then(() => alert('添加成功'));
   };
   render() {
     return (
