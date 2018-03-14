@@ -20,12 +20,8 @@ export default class Decks extends Component {
     return decks.length ? (
       <FlatList
         data={decks}
-        renderItem={({ item }) => (
-          <Deck
-            title={item.title}
-            count={item.questions.length}
-            key={item.title}
-          />
+        renderItem={({ item, index }) => (
+          <Deck title={item.title} count={item.questions.length} key={index} />
         )}
       />
     ) : (
