@@ -18,21 +18,26 @@ export default class AddCardDeck extends Component {
     this.setState({ cardDeckTitle: text });
   };
   onInputDone = () => {
+    if (!this.state.cardDeckTitle) return;
     saveDeckTitle(this.state.cardDeckTitle)
       .then(this.setState(set('cardDeckTitle', '')))
       .then(() => alert('添加成功'));
   };
   render() {
+    const { cardDeckTitle } = this.state;
     return (
       <CenterKeyboardAvoidingView behavior="padding">
         <QuestionTitle>What is the title of your new deck?</QuestionTitle>
         <TextInput
-          value={this.state.cardDeckTitle}
+          value={cardDeckTitle}
           onChangeText={this.onChangeTitle}
           onEndEditing={this.onInputDone}
           placeholder="Deck Title"
         />
-        <SubmitButton onPress={this.onInputDone}>
+        <SubmitButton
+          onPress={this.onInputDone}
+          opacity={!!cardDeckTitle ? 1 : 0.2}
+        >
           <SubmitText>Submit</SubmitText>
         </SubmitButton>
       </CenterKeyboardAvoidingView>

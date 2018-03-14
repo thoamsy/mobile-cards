@@ -15,6 +15,7 @@ const SubmitButton = styled.TouchableOpacity`
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.84);
   padding: 10px;
+  opacity: ${({ opacity }) => opacity};
 `;
 
 const SubmitText = styled.Text`
@@ -45,7 +46,7 @@ const TextInput = styled.TextInput.attrs({
 
 const DeckContainer = styled.View`
   border: 1px solid black;
-  height: 300px;
+  height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
