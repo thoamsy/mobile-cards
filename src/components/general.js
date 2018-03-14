@@ -43,8 +43,12 @@ const TextInput = styled.TextInput.attrs({
   border-radius: 8px;
 `;
 
-const DeckContainer = CenterView.extend`
-  border-bottom: 1px solid black;
+const DeckContainer = styled.View`
+  border: 1px solid black;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const DeckTitle = SubmitText.extend`
   color: black;
@@ -58,10 +62,7 @@ const DeckCountText = SubmitText.extend`
 const Deck = ({ title, count }) => (
   <DeckContainer>
     <DeckTitle>{title}</DeckTitle>
-    <DeckCountText>
-      {count}
-      {count <= 1 ? 'card' : 'cards'}
-    </DeckCountText>
+    <DeckCountText>{`${count} ${count <= 1 ? 'card' : 'cards'}`}</DeckCountText>
   </DeckContainer>
 );
 export {

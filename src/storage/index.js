@@ -16,6 +16,5 @@ export async function getDeck(id) {
 }
 
 export async function getDecks() {
-  AsyncStorage.removeItem(KEY);
-  // return JSON.parse(await AsyncStorage.getItem(KEY));
+  return JSON.parse(await AsyncStorage.getItem(KEY));
 }

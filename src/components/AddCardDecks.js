@@ -7,7 +7,7 @@ import {
   SubmitText,
   TextInput,
 } from './general';
-import { saveDeckTitle, getDecks } from '../storage';
+import { saveDeckTitle } from '../storage';
 
 export default class AddCardDeck extends Component {
   state = {
@@ -32,7 +32,7 @@ export default class AddCardDeck extends Component {
           onEndEditing={this.onInputDone}
           placeholder="Deck Title"
         />
-        <SubmitButton>
+        <SubmitButton onPress={this.onInputDone}>
           <SubmitText>Submit</SubmitText>
         </SubmitButton>
       </CenterKeyboardAvoidingView>
