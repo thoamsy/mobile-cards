@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components/native';
 
 const CenterView = styled.View`
@@ -42,6 +43,27 @@ const TextInput = styled.TextInput.attrs({
   border-radius: 8px;
 `;
 
+const DeckContainer = CenterView.extend`
+  border-bottom: 1px solid black;
+`;
+const DeckTitle = SubmitText.extend`
+  color: black;
+  font-size: 16px;
+`;
+const DeckCountText = SubmitText.extend`
+  color: #333;
+  font-size: 12px;
+`;
+
+const Deck = ({ title, count }) => (
+  <DeckContainer>
+    <DeckTitle>{title}</DeckTitle>
+    <DeckCountText>
+      {count}
+      {count <= 1 ? 'card' : 'cards'}
+    </DeckCountText>
+  </DeckContainer>
+);
 export {
   SubmitButton,
   CenterView,
@@ -49,4 +71,5 @@ export {
   QuestionTitle,
   SubmitText,
   TextInput,
+  Deck,
 };
