@@ -2,11 +2,29 @@ import React from 'react';
 
 import AddCardDecks from './components/AddCardDecks';
 import Decks from './components/Decks';
+import DeckDetail from './components/DeckDetail';
 import { FontAwesome } from '@expo/vector-icons';
+import { StackNavigator } from 'react-navigation';
 
-const tabOptions = {
+const stackOptions = {
   Decks: {
     screen: Decks,
+    path: 'decks/',
+  },
+  DeckDetail: {
+    screen: DeckDetail,
+    path: 'decks/:title',
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
+  },
+};
+
+const Home = StackNavigator(stackOptions, { headerMode: 'none' });
+
+const tabOptions = {
+  Main: {
+    screen: Home,
     navigationOptions: {
       tabBarLabel: 'Decks',
       tabBarIcon: () => <FontAwesome name="question" size={20} />,
@@ -20,12 +38,6 @@ const tabOptions = {
     },
   },
 };
-export const navigatorOptions = {
-  swipeEnable: true,
-  animatedEnable: true,
-  header: null,
-};
-
-const stackOptions = {};
+export const navigatorOptions = {};
 
 export default tabOptions;
