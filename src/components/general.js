@@ -15,7 +15,6 @@ const SubmitButton = styled.TouchableOpacity`
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.84);
   padding: 10px;
-  opacity: ${({ opacity }) => opacity};
 `;
 
 const SubmitText = styled.Text`
@@ -53,11 +52,12 @@ const DeckContainer = styled.View`
 `;
 const DeckTitle = SubmitText.extend`
   color: black;
-  font-size: 16px;
+  font-size: 22px;
+  margin: 8px 0;
 `;
 const DeckCountText = SubmitText.extend`
   color: #333;
-  font-size: 12px;
+  font-size: 16px;
 `;
 
 const Deck = ({ title, count }) => (

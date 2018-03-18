@@ -3,11 +3,11 @@ import { View, StatusBar } from 'react-native';
 import { Constants } from 'expo';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { orderBy, update, concat } from 'lodash/fp';
-import routeOptions, { navigatorOptions } from './src/tab-conf';
+import tabOptions, { navigatorOptions } from './src/navigation-conf';
 
-import { getDecks, removeDecks } from './src/storage/';
+import { getDecks } from './src/storage/';
 
-const Tabs = TabNavigator(routeOptions, navigatorOptions);
+const Tabs = TabNavigator(tabOptions, navigatorOptions);
 
 const Main = StackNavigator({
   Home: {

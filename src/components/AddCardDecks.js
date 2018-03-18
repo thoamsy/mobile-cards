@@ -38,10 +38,7 @@ export default class AddCardDeck extends Component {
           onEndEditing={this.onInputDone}
           placeholder="Deck Title"
         />
-        <SubmitButton
-          onPress={this.onInputDone}
-          opacity={!!cardDeckTitle ? 1 : 0.2}
-        >
+        <SubmitButton onPress={this.onInputDone}>
           <SubmitText>Submit</SubmitText>
         </SubmitButton>
       </CenterKeyboardAvoidingView>
