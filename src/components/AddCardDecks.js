@@ -17,11 +17,15 @@ export default class AddCardDeck extends Component {
   onChangeTitle = text => {
     this.setState({ cardDeckTitle: text });
   };
+
   onInputDone = () => {
     if (!this.state.cardDeckTitle) return;
-    saveDeckTitle(this.state.cardDeckTitle)
-      .then(this.setState(set('cardDeckTitle', '')))
-      .then(() => alert('添加成功'));
+    const { screenProps, navigation } = this.props;
+    const { addDeck } = screenProps;
+    saveDeckTitle(this.state.cardDeckTitle.trim())
+      .then(addDeck)
+      .then(() => this.setState(set('cardDeckTitle', '')))
+      .then(() => navigation.navigate('Decks'));
   };
   render() {
     const { cardDeckTitle } = this.state;

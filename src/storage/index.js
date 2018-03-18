@@ -6,8 +6,11 @@ export async function saveDeckTitle(title) {
   origin[title] = {
     title,
     questions: [],
+    createdTime: Date.now(),
   };
-  return AsyncStorage.setItem(KEY, JSON.stringify(origin));
+  return AsyncStorage.setItem(KEY, JSON.stringify(origin)).then(() => ({
+    ...origin[title],
+  }));
 }
 
 export async function getDeck(id) {
@@ -17,4 +20,8 @@ export async function getDeck(id) {
 
 export async function getDecks() {
   return JSON.parse(await AsyncStorage.getItem(KEY));
+}
+
+export function removeDecks() {
+  AsyncStorage.removeItem(KEY);
 }
