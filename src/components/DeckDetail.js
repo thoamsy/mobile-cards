@@ -9,11 +9,17 @@ import {
   Deck,
 } from './general';
 
-const DeckDetail = ({ navigation: { state: { params } } }) => (
+const DeckDetail = ({ navigation: { navigate, state: { params } } }) => (
   <CenterView style={{ justifyContent: 'space-around' }}>
     <Deck title={params.title} count={params.deck.questions.length} />
     <View>
-      <AddCardButton>
+      <AddCardButton
+        onPress={() => {
+          navigate({
+            routeName: 'AddCard',
+          });
+        }}
+      >
         <AddCardText>Add Card</AddCardText>
       </AddCardButton>
       <StartQuizButton>

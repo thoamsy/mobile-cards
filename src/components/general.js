@@ -17,6 +17,7 @@ const SubmitButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   width: 60%;
+  height: 44px;
   padding: 8px;
 `;
 
