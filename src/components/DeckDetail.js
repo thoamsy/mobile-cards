@@ -5,21 +5,21 @@ import {
   StartQuizText,
   AddCardButton,
   AddCardText,
-  DeckCountText,
-  DeckTitle,
   CenterView,
+  Deck,
 } from './general';
 
 const DeckDetail = ({ navigation: { state: { params } } }) => (
-  <CenterView>
-    <DeckTitle>{params.title}</DeckTitle>
-    <DeckCountText>{params.deck.questions.length}</DeckCountText>
-    <AddCardButton>
-      <AddCardText>shit</AddCardText>
-    </AddCardButton>
-    <StartQuizButton>
-      <StartQuizText>fuck</StartQuizText>
-    </StartQuizButton>
+  <CenterView style={{ justifyContent: 'space-around' }}>
+    <Deck title={params.title} count={params.deck.questions.length} />
+    <View>
+      <AddCardButton>
+        <AddCardText>Add Card</AddCardText>
+      </AddCardButton>
+      <StartQuizButton>
+        <StartQuizText>Start Quiz</StartQuizText>
+      </StartQuizButton>
+    </View>
   </CenterView>
 );
 

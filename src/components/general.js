@@ -14,7 +14,10 @@ const CenterKeyboardAvoidingView = styled.KeyboardAvoidingView`
 const SubmitButton = styled.TouchableOpacity`
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.84);
-  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  padding: 8px;
 `;
 
 const SubmitText = styled.Text`
@@ -43,9 +46,10 @@ const TextInput = styled.TextInput.attrs({
   border-radius: 8px;
 `;
 
-const DeckContainer = styled.TouchableOpacity`
-  border: 1px solid black;
+const DeckContainer = styled.View`
+  border: ${({ borderSize = 0 }) => borderSize + 'px solid black'};
   height: 200px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,8 +64,8 @@ const DeckCountText = SubmitText.extend`
   font-size: 16px;
 `;
 
-const Deck = ({ title, count, onPress }) => (
-  <DeckContainer onPress={onPress}>
+const Deck = ({ title, count, onPress, borderSize }) => (
+  <DeckContainer onPress={onPress} borderSize={borderSize}>
     <DeckTitle>{title}</DeckTitle>
     <DeckCountText>{`${count} ${count <= 1 ? 'card' : 'cards'}`}</DeckCountText>
   </DeckContainer>
@@ -69,7 +73,6 @@ const Deck = ({ title, count, onPress }) => (
 
 const AddCardButton = SubmitButton.extend`
   background-color: white;
-  width: 60%;
   border: 1px solid black;
   height: 66px;
   margin: 8px 0;
@@ -80,9 +83,7 @@ const StartQuizButton = AddCardButton.extend`
 const StartQuizText = SubmitText.extend`
   color: white;
   font-size: 22px;
-  height: 44px;
   text-align: center;
-  padding: 8px 0;
 `;
 const AddCardText = StartQuizText.extend`
   color: black;
@@ -97,8 +98,6 @@ export {
   Deck,
   StartQuizButton,
   AddCardButton,
-  DeckTitle,
-  DeckCountText,
   StartQuizText,
   AddCardText,
 };

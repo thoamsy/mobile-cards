@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Text } from 'react-native';
+import { FlatList, Text, TouchableOpacity } from 'react-native';
 import { Deck } from './general';
 
 const Decks = ({ screenProps, navigation }) => {
@@ -9,17 +9,21 @@ const Decks = ({ screenProps, navigation }) => {
     <FlatList
       data={decks}
       renderItem={({ item }) => (
-        <Deck
+        <TouchableOpacity
           onPress={() =>
             navigation.navigate({
               routeName: 'DeckDetail',
               params: { title: item.title, deck: item },
             })
           }
-          title={item.title}
-          count={item.questions.length}
           key={item.title}
-        />
+        >
+          <Deck
+            title={item.title}
+            count={item.questions.length}
+            borderSize={1}
+          />
+        </TouchableOpacity>
       )}
     />
   ) : (
