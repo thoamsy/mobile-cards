@@ -5,7 +5,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import { orderBy, update, concat } from 'lodash/fp';
 import routeOptions, { navigatorOptions } from './src/navigation-conf';
 
-import { getDecks } from './src/storage/';
+import { getDecks, removeDecks, getDeck } from './src/storage/';
 
 const Tabs = TabNavigator(routeOptions, navigatorOptions);
 
@@ -21,13 +21,11 @@ class App extends Component {
   };
 
   componentDidMount = async () => {
-    const decks = orderBy(
-      'createdTime',
-      ['desc'],
-      Object.values(await getDecks())
-    );
+    const decks = await getDecks();
     if (decks != null) {
-      this.setState({ decks });
+      this.setState({
+        decks: orderBy('createdTime', 'desc', Object.values(decks)),
+      });
     }
   };
 

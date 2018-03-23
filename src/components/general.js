@@ -88,6 +88,13 @@ const StartQuizText = SubmitText.extend`
 const AddCardText = StartQuizText.extend`
   color: black;
 `;
+
+const Tips = styled.Text`
+  font-size: 36px;
+  color: rgba(0, 0, 0, 0.84);
+  text-align: center;
+  padding: 15px;
+`;
 export {
   SubmitButton,
   CenterView,
@@ -100,4 +107,5 @@ export {
   AddCardButton,
   StartQuizText,
   AddCardText,
+  Tips,
 };

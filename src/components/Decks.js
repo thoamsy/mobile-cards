@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, Text, TouchableOpacity } from 'react-native';
-import { Deck } from './general';
+import { Deck, Tips, CenterView } from './general';
 
 const Decks = ({ screenProps, navigation }) => {
   const { decks } = screenProps;
@@ -27,7 +27,9 @@ const Decks = ({ screenProps, navigation }) => {
       )}
     />
   ) : (
-    <Text>You have no deck, go to add!</Text>
+    <CenterView>
+      <Tips>You have no deck, go to add!</Tips>
+    </CenterView>
   );
 };
 export default Decks;
