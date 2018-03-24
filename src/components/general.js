@@ -35,7 +35,7 @@ const QuestionTitle = styled.Text`
 const TextInput = styled.TextInput.attrs({
   placeholderTextColor: '#999',
   autoCorrect: true,
-  autoCapitalize: 'words',
+  autoCapitalize: 'sentences',
   returnKeyType: 'done',
   clearButtonMode: 'while-editing',
 })`
