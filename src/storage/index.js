@@ -13,15 +13,16 @@ export async function saveDeckTitle(title) {
   }));
 }
 
-export async function getDeck(id) {
-  const origin = JSON.parse(await AsyncStorage.getItem(KEY));
-  return origin[id];
-}
-
 export async function getDecks() {
   return JSON.parse(await AsyncStorage.getItem(KEY));
 }
 
 export function removeDecks() {
   AsyncStorage.removeItem(KEY);
+}
+
+export async function addQuestions(deckTitle, card) {
+  const decks = await getDecks();
+  decks[deckTitle].questions.push(card);
+  return AsyncStorage.setItem(KEY, JSON.stringify(decks));
 }

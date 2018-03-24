@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { View, StatusBar } from 'react-native';
 import { Constants } from 'expo';
-import { TabNavigator, StackNavigator } from 'react-navigation';
+import { TabNavigator, StackNavigator, SafeAreaView } from 'react-navigation';
 import { orderBy, update, concat } from 'lodash/fp';
 import routeOptions, { navigatorOptions } from './src/navigation-conf';
 
-import { getDecks, removeDecks, getDeck } from './src/storage/';
+import { getDecks, removeDecks } from './src/storage/';
 
 const Tabs = TabNavigator(routeOptions, navigatorOptions);
 
@@ -28,17 +28,26 @@ class App extends Component {
       });
     }
   };
-
   addDeck = deck => {
     this.setState(update('decks', concat(deck)));
+  };
+
+  addCard = index => card => {
+    this.setState(update(`decks[${index}].questions`, concat(card)));
   };
 
   render() {
     const { decks } = this.state;
     return (
       <View style={{ flex: 1 }}>
-        <StatusBar networkActivityIndicatorVisible translucent />
-        <Main screenProps={{ decks, addDeck: this.addDeck }} />
+        <StatusBar
+          networkActivityIndicatorVisible
+          translucent
+          barStyle="dark-content"
+        />
+        <Main
+          screenProps={{ decks, addDeck: this.addDeck, addCard: this.addCard }}
+        />
       </View>
     );
   }

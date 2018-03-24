@@ -15,9 +15,7 @@ const DeckDetail = ({ navigation: { navigate, state: { params } } }) => (
     <View>
       <AddCardButton
         onPress={() => {
-          navigate({
-            routeName: 'AddCard',
-          });
+          navigate('AddCard', { ...params });
         }}
       >
         <AddCardText>Add Card</AddCardText>

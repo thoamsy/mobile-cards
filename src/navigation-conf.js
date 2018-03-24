@@ -11,6 +11,9 @@ const stackOptions = {
   Decks: {
     screen: Decks,
     path: 'decks/',
+    navigationOptions: () => ({
+      title: 'Decks',
+    }),
   },
   DeckDetail: {
     screen: DeckDetail,
@@ -22,10 +25,11 @@ const stackOptions = {
   AddCard: {
     screen: AddCard,
     path: 'decks/:title/add',
-    navigationOptions: ({ navigation }) => ({
+    navigationOptions: () => ({
       title: 'Add Card',
     }),
   },
+  initialRouteName: 'Decks',
 };
 
 const Home = StackNavigator(stackOptions, { headerMode: 'none' });
