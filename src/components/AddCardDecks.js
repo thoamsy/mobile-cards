@@ -35,7 +35,7 @@ export default class AddCardDeck extends Component {
         <TextInput
           value={cardDeckTitle}
           onChangeText={this.onChangeTitle}
-          onEndEditing={this.onInputDone}
+          onSubmitEditing={this.onInputDone}
           placeholder="Deck Title"
         />
         <SubmitButton onPress={this.onInputDone}>
