@@ -34,7 +34,13 @@ const DeckDetail = ({ navigation }) => {
         >
           <AddCardText>Add Card</AddCardText>
         </AddCardButton>
-        <StartQuizButton>
+        <StartQuizButton
+          onPress={() => {
+            navigate('Quiz', {
+              deck,
+            });
+          }}
+        >
           <StartQuizText>Start Quiz</StartQuizText>
         </StartQuizButton>
       </View>

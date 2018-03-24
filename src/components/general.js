@@ -13,7 +13,8 @@ const CenterKeyboardAvoidingView = styled.KeyboardAvoidingView`
 `;
 const SubmitButton = styled.TouchableOpacity`
   border-radius: 8px;
-  background-color: rgba(0, 0, 0, 0.84);
+  background-color: ${({ backgroundColor }) =>
+    backgroundColor || 'rgba(0, 0, 0, 0.84)'};
   justify-content: center;
   align-items: center;
   width: 60%;

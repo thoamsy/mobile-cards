@@ -6,6 +6,7 @@ import AddCardDecks from './components/AddCardDecks';
 import Decks from './components/Decks';
 import DeckDetail from './components/DeckDetail';
 import AddCard from './components/AddCard';
+import Quiz from './components/Quiz';
 
 const stackOptions = {
   Decks: {
@@ -27,6 +28,12 @@ const stackOptions = {
     path: 'decks/:title/add',
     navigationOptions: () => ({
       title: 'Add Card',
+    }),
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: () => ({
+      title: 'Quiz',
     }),
   },
   initialRouteName: 'Decks',
