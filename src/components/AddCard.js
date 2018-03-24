@@ -15,7 +15,7 @@ const initialState = {
 };
 class AddCard extends Component {
   static navigationOptions = {
-    headerRight: <Button title="infO" color="#abc" />,
+    headerRight: <Button title="info" color="#abc" />,
   };
   state = initialState;
 
