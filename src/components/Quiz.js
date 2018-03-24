@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Button, View } from 'react-native';
-import { update, add } from 'lodash/fp';
+import { update, add, shuffle } from 'lodash/fp';
 
 import { CenterView, SubmitButton, SubmitText } from './general';
 
@@ -27,9 +27,12 @@ class Quiz extends Component {
     correctCount: 0,
   };
 
+  get deck() {
+    return this.props.navigation.state.params.deck;
+  }
+  questions = shuffle(this.deck.questions).slice(-10);
   get totalQuestion() {
-    // 真他妈的长
-    return this.props.navigation.state.params.deck.questions.length;
+    return Math.min(this.questions.length, 10);
   }
 
   onCorrect = () => {
@@ -42,10 +45,8 @@ class Quiz extends Component {
   };
 
   render() {
-    const { navigation } = this.props;
     const { currentQuestion } = this.state;
-    const { deck } = navigation.state.params;
-    const quiz = deck.questions[currentQuestion];
+    const quiz = this.questions[currentQuestion];
 
     return (
       <Fragment>
