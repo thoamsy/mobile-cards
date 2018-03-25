@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesome } from '@expo/vector-icons';
-import { StackNavigator } from 'react-navigation';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 
 import AddCardDecks from './components/AddCardDecks';
 import Decks from './components/Decks';
@@ -57,6 +57,8 @@ const tabOptions = {
     },
   },
 };
-export const routeOptions = { navigationOptions: { header: null } };
+const routeOptions = { navigationOptions: { header: null } };
 
-export default tabOptions;
+const Main = TabNavigator(tabOptions, routeOptions);
+
+export default Main;
