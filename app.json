@@ -1,5 +1,13 @@
 {
   "expo": {
-    "sdkVersion": "25.0.0"
+    "sdkVersion": "25.0.0",
+    "orientation": "portrait",
+    "name": "Mobile Flashcards",
+    "description": "一个非常简单的入门 RN 的项目",
+    "version": "1.0",
+    "icon": "icon.jpg",
+    "ios": {
+      "bundleIdentifier": "org.thoamsy-flashcards.exp"
+    }
   }
 }
