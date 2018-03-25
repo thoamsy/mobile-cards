@@ -17,9 +17,10 @@ const SubmitButton = styled.TouchableOpacity`
     backgroundColor || 'rgba(0, 0, 0, 0.84)'};
   justify-content: center;
   align-items: center;
-  width: 60%;
+  width: 120px;
   height: 44px;
   padding: 8px;
+  margin-bottom: 15px;
 `;
 
 const SubmitText = styled.Text`

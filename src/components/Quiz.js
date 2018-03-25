@@ -134,7 +134,9 @@ class Quiz extends Component {
           correctPercentage={`${correctCount / this.totalQuestion * 100}%`}
           correctCount={correctCount}
         />
-        <CenterView style={{ justifyContent: 'space-around' }}>
+        <CenterView
+          style={{ justifyContent: 'space-around', marginBottom: 100 }}
+        >
           <CenterView>
             <Animated.View style={this.backInterpolate}>
               <TitleText>{quiz.answer}</TitleText>
