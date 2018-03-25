@@ -32,6 +32,9 @@ class Quiz extends Component {
 
   frontInterpolate = {
     margin: 10,
+    backfaceVisibility: 'hidden',
+    position: 'absolute',
+    top: 0,
     transform: [
       {
         rotateY: this.state.flip.interpolate({
@@ -43,6 +46,9 @@ class Quiz extends Component {
   };
   backInterpolate = {
     margin: 10,
+    backfaceVisibility: 'hidden',
+    position: 'absolute',
+    top: 0,
     transform: [
       {
         rotateY: this.state.flip.interpolate({
@@ -54,6 +60,7 @@ class Quiz extends Component {
   };
   componentDidMount = () => {
     this.animatedValue = 0;
+    // 用来跟踪当前动画的 value, 因为 Animated.Value 是对象
     this.state.flip.addListener(({ value }) => (this.animatedValue = value));
   };
   componentWillUnmount() {
@@ -85,19 +92,15 @@ class Quiz extends Component {
   finishQuiz = () => {
     this.modalVisible = true;
   };
-  onCorrect = () => {
-    if (this.state.currentQuestion + 1 === this.totalQuestion) {
-      return this.finishQuiz();
-    }
-    this.setState(update('currentQuestion', addOne));
-    this.setState(update('correctCount', addOne));
-  };
 
-  onIncorrect = () => {
+  onNextQuestion = isCorrect => () => {
     if (this.state.currentQuestion + 1 === this.totalQuestion) {
       return this.finishQuiz();
     }
     this.setState(update('currentQuestion', addOne));
+    // 重置翻转
+    this.state.flip.setValue(0);
+    isCorrect && this.setState(update('correctCount'), addOne);
   };
 
   toggleFlip = () => {
@@ -132,23 +135,35 @@ class Quiz extends Component {
           correctCount={correctCount}
         />
         <CenterView style={{ justifyContent: 'space-around' }}>
-          <Animated.View style={this.frontInterpolate}>
-            <TitleText>{quiz.answer}</TitleText>
-            <Button
-              title="Question"
-              color="#c4392a"
-              onPress={this.toggleFlip}
-            />
-          </Animated.View>
-          <Animated.View style={this.backInterpolate}>
-            <TitleText>{quiz.question}</TitleText>
-            <Button title="Answer" color="#c4392a" onPress={this.toggleFlip} />
-          </Animated.View>
+          <CenterView>
+            <Animated.View style={this.backInterpolate}>
+              <TitleText>{quiz.answer}</TitleText>
+              <Button
+                title="Question"
+                color="#c4392a"
+                onPress={this.toggleFlip}
+              />
+            </Animated.View>
+            <Animated.View style={this.frontInterpolate}>
+              <TitleText>{quiz.question}</TitleText>
+              <Button
+                title="Answer"
+                color="#c4392a"
+                onPress={this.toggleFlip}
+              />
+            </Animated.View>
+          </CenterView>
           <View style={{ justifyContent: 'center' }}>
-            <SubmitButton backgroundColor="#377d22" onPress={this.onCorrect}>
+            <SubmitButton
+              backgroundColor="#377d22"
+              onPress={this.onNextQuestion(true)}
+            >
               <SubmitText>Correct</SubmitText>
             </SubmitButton>
-            <SubmitButton backgroundColor="#c4392a" onPress={this.onIncorrect}>
+            <SubmitButton
+              backgroundColor="#c4392a"
+              onPress={this.onNextQuestion()}
+            >
               <SubmitText>Incorrect</SubmitText>
             </SubmitButton>
           </View>
