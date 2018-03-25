@@ -1,20 +1,10 @@
 import React, { Component } from 'react';
 import { View, StatusBar } from 'react-native';
-import { Constants } from 'expo';
-import { TabNavigator, StackNavigator } from 'react-navigation';
 import { orderBy, update, concat } from 'lodash/fp';
 
-import tabOptions, { routeOptions } from './src/navigation-conf';
+import Main from './src/navigation-conf';
 import { getDecks } from './src/storage/';
 
-const Tabs = TabNavigator(tabOptions, routeOptions);
-
-const Main = StackNavigator({
-  Home: {
-    screen: Tabs,
-    path: 'home/',
-  },
-});
 class App extends Component {
   state = {
     decks: [],
@@ -40,11 +30,13 @@ class App extends Component {
     const { decks } = this.state;
     return (
       <View style={{ flex: 1 }}>
-        <StatusBar
-          networkActivityIndicatorVisible
-          translucent
-          barStyle="dark-content"
-        />
+        <View>
+          <StatusBar
+            networkActivityIndicatorVisible
+            translucent
+            barStyle="dark-content"
+          />
+        </View>
         <Main
           screenProps={{ decks, addDeck: this.addDeck, addCard: this.addCard }}
         />
