@@ -36,6 +36,10 @@ const DeckDetail = ({ navigation }) => {
         </AddCardButton>
         <StartQuizButton
           onPress={() => {
+            if (!deck.questions.length) {
+              alert(`You have not any cards, can't start`);
+              return;
+            }
             navigate('Quiz', {
               deck,
             });
