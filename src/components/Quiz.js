@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Button, View } from 'react-native';
+import { Button, View, Animated } from 'react-native';
 import { update, add, shuffle } from 'lodash/fp';
 
 import { CenterView, SubmitButton, SubmitText } from './general';
@@ -27,7 +27,38 @@ class Quiz extends Component {
     currentQuestion: 0,
     correctCount: 0,
     modalVisible: false,
+    flip: new Animated.Value(0),
   };
+
+  frontInterpolate = {
+    margin: 10,
+    transform: [
+      {
+        rotateY: this.state.flip.interpolate({
+          inputRange: [0, 180],
+          outputRange: ['0deg', '180deg'],
+        }),
+      },
+    ],
+  };
+  backInterpolate = {
+    margin: 10,
+    transform: [
+      {
+        rotateY: this.state.flip.interpolate({
+          inputRange: [0, 180],
+          outputRange: ['180deg', '360deg'],
+        }),
+      },
+    ],
+  };
+  componentDidMount = () => {
+    this.animatedValue = 0;
+    this.state.flip.addListener(({ value }) => (this.animatedValue = value));
+  };
+  componentWillUnmount() {
+    this.state.flip.removeAllListeners();
+  }
 
   get modalVisible() {
     return this.state.modalVisible;
@@ -69,6 +100,22 @@ class Quiz extends Component {
     this.setState(update('currentQuestion', addOne));
   };
 
+  toggleFlip = () => {
+    if (this.animatedValue >= 90) {
+      Animated.spring(this.state.flip, {
+        toValue: 0,
+        friction: 8,
+        tension: 10,
+      }).start();
+    } else {
+      Animated.spring(this.state.flip, {
+        toValue: 180,
+        friction: 8,
+        tension: 8,
+      }).start();
+    }
+  };
+
   render() {
     const { currentQuestion, correctCount } = this.state;
     const quiz = this.questions[currentQuestion];
@@ -85,10 +132,18 @@ class Quiz extends Component {
           correctCount={correctCount}
         />
         <CenterView style={{ justifyContent: 'space-around' }}>
-          <View style={{ padding: 10 }}>
+          <Animated.View style={this.frontInterpolate}>
+            <TitleText>{quiz.answer}</TitleText>
+            <Button
+              title="Question"
+              color="#c4392a"
+              onPress={this.toggleFlip}
+            />
+          </Animated.View>
+          <Animated.View style={this.backInterpolate}>
             <TitleText>{quiz.question}</TitleText>
-            <Button title="Answer" color="#c4392a" />
-          </View>
+            <Button title="Answer" color="#c4392a" onPress={this.toggleFlip} />
+          </Animated.View>
           <View style={{ justifyContent: 'center' }}>
             <SubmitButton backgroundColor="#377d22" onPress={this.onCorrect}>
               <SubmitText>Correct</SubmitText>
