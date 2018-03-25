@@ -4,10 +4,10 @@ import { Constants } from 'expo';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { orderBy, update, concat } from 'lodash/fp';
 
-import routeOptions, { navigatorOptions } from './src/navigation-conf';
+import tabOptions, { routeOptions } from './src/navigation-conf';
 import { getDecks } from './src/storage/';
 
-const Tabs = TabNavigator(routeOptions, navigatorOptions);
+const Tabs = TabNavigator(tabOptions, routeOptions);
 
 const Main = StackNavigator({
   Home: {

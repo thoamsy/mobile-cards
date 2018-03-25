@@ -39,7 +39,7 @@ const stackOptions = {
   initialRouteName: 'Decks',
 };
 
-const Home = StackNavigator(stackOptions, { headerMode: 'none' });
+const Home = StackNavigator(stackOptions);
 
 const tabOptions = {
   Main: {
@@ -57,6 +57,6 @@ const tabOptions = {
     },
   },
 };
-export const navigatorOptions = {};
+export const routeOptions = { navigationOptions: { header: null } };
 
 export default tabOptions;
