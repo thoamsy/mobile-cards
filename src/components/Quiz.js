@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import { Button, View, Animated } from 'react-native';
+import { Button, View, Animated, Alert } from 'react-native';
 import { update, add, shuffle } from 'lodash/fp';
 
-import { CenterView, SubmitButton, SubmitText } from './general';
 import ResultModal from './ResultModal';
+import { CenterView, SubmitButton, SubmitText } from './general';
+import { isNotifictionGranted, setLocalNotification } from '../notification';
 
 const addOne = add(1);
 const TitleText = SubmitText.extend`
@@ -85,9 +86,21 @@ class Quiz extends Component {
     return Math.min(this.questions.length, 10);
   }
 
+  setNotification = async () => {
+    const isGranted = await isNotifictionGranted();
+    if (!isGranted) {
+      Alert.alert('每日提醒', '是否允许明天 21:00 提醒你记得测试呢🤓?', [
+        { text: 'Of Course', onPress: setLocalNotification },
+        { text: '不用了, 我很自觉', style: 'cancel' },
+      ]);
+    } else {
+      setLocalNotification();
+    }
+  };
   onHideModal = () => {
     this.modalVisible = false;
     this.props.navigation.goBack();
+    this.setNotification();
   };
   finishQuiz = () => {
     this.modalVisible = true;
