@@ -3,6 +3,7 @@ import { Button, View } from 'react-native';
 import { update, add, shuffle } from 'lodash/fp';
 
 import { CenterView, SubmitButton, SubmitText } from './general';
+import ResultModal from './ResultModal';
 
 const addOne = add(1);
 const TitleText = SubmitText.extend`
@@ -25,7 +26,18 @@ class Quiz extends Component {
   state = {
     currentQuestion: 0,
     correctCount: 0,
+    modalVisible: false,
   };
+
+  get modalVisible() {
+    return this.state.modalVisible;
+  }
+
+  set modalVisible(visible) {
+    this.setState({
+      modalVisible: visible,
+    });
+  }
 
   get deck() {
     return this.props.navigation.state.params.deck;
@@ -35,17 +47,30 @@ class Quiz extends Component {
     return Math.min(this.questions.length, 10);
   }
 
+  onHideModal = () => {
+    this.modalVisible = false;
+    this.props.navigation.goBack();
+  };
+  finishQuiz = () => {
+    this.modalVisible = true;
+  };
   onCorrect = () => {
+    if (this.state.currentQuestion + 1 === this.totalQuestion) {
+      return this.finishQuiz();
+    }
     this.setState(update('currentQuestion', addOne));
     this.setState(update('correctCount', addOne));
   };
 
   onIncorrect = () => {
+    if (this.state.currentQuestion + 1 === this.totalQuestion) {
+      return this.finishQuiz();
+    }
     this.setState(update('currentQuestion', addOne));
   };
 
   render() {
-    const { currentQuestion } = this.state;
+    const { currentQuestion, correctCount } = this.state;
     const quiz = this.questions[currentQuestion];
 
     return (
@@ -53,6 +78,12 @@ class Quiz extends Component {
         <ProgressText>
           {currentQuestion}/{this.totalQuestion}
         </ProgressText>
+        <ResultModal
+          modalVisible={this.modalVisible}
+          onCloseModal={this.onHideModal}
+          correctPercentage={`${correctCount / this.totalQuestion * 100}%`}
+          correctCount={correctCount}
+        />
         <CenterView style={{ justifyContent: 'space-around' }}>
           <View style={{ padding: 10 }}>
             <TitleText>{quiz.question}</TitleText>

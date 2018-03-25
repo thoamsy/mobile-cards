@@ -25,6 +25,7 @@ const SubmitButton = styled.TouchableOpacity`
 const SubmitText = styled.Text`
   color: white;
   font-size: 22px;
+  margin: 8px 0;
 `;
 const QuestionTitle = styled.Text`
   color: #333;
