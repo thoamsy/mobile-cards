@@ -94,13 +94,13 @@ class Quiz extends Component {
   };
 
   onNextQuestion = isCorrect => () => {
-    if (this.state.currentQuestion + 1 === this.totalQuestion) {
-      return this.finishQuiz();
-    }
     this.setState(update('currentQuestion', addOne));
+    isCorrect && this.setState(update('correctCount', addOne));
     // 重置翻转
     this.state.flip.setValue(0);
-    isCorrect && this.setState(update('correctCount'), addOne);
+    if (this.state.currentQuestion === this.totalQuestion - 1) {
+      this.finishQuiz();
+    }
   };
 
   toggleFlip = () => {
@@ -121,7 +121,7 @@ class Quiz extends Component {
 
   render() {
     const { currentQuestion, correctCount } = this.state;
-    const quiz = this.questions[currentQuestion];
+    const quiz = this.questions[currentQuestion] || {};
 
     return (
       <Fragment>
