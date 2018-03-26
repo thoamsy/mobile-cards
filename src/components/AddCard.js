@@ -19,8 +19,8 @@ class AddCard extends Component {
   };
   state = initialState;
 
-  onChangeQuestion = question => this.setState({ question });
-  onChangeAnswer = answer => this.setState({ answer });
+  onChangeQuestion = question => this.setState({ question: question.trim() });
+  onChangeAnswer = answer => this.setState({ answer: answer.trim() });
 
   turnNextInput = () => {
     this.answerInput.focus();
