@@ -57,7 +57,10 @@ const tabOptions = {
     },
   },
 };
-const routeOptions = { navigationOptions: { header: null } };
+const routeOptions = {
+  navigationOptions: { header: null },
+  animationEnabled: true,
+};
 
 const Main = TabNavigator(tabOptions, routeOptions);
 
