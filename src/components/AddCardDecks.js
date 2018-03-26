@@ -25,7 +25,7 @@ export default class AddCardDeck extends Component {
     saveDeckTitle(this.state.cardDeckTitle.trim())
       .then(addDeck)
       .then(() => this.setState(set('cardDeckTitle', '')))
-      .then(() => navigation.navigate('Decks'));
+      .then(() => navigation.navigate('Main'));
   };
   render() {
     const { cardDeckTitle } = this.state;
