@@ -15,21 +15,27 @@ const ResultView = styled.View`
 const ResultModal = ({
   modalVisible,
   onCloseModal,
+  onQuizRestart,
   correctPercentage,
   correctCount,
 }) => (
   <Modal animationType="slide" transparent={false} visible={modalVisible}>
     <CenterView style={{ justifyContent: 'space-around' }}>
       <ResultView>
-        <Text>测试完成</Text>
+        <Text>Finish 🎉!</Text>
         <Text>
           你回答正确了 {correctCount} 个, 正确率为 {correctPercentage}
         </Text>
         <FontAwesome name="check-circle" size={80} />
       </ResultView>
-      <TouchableHighlight onPress={onCloseModal}>
-        <Text>I get it!</Text>
-      </TouchableHighlight>
+      <View style={{ alignItems: 'center' }}>
+        <TouchableHighlight onPress={onCloseModal}>
+          <Text>Go Back</Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={onQuizRestart}>
+          <Text>Test Again</Text>
+        </TouchableHighlight>
+      </View>
     </CenterView>
   </Modal>
 );

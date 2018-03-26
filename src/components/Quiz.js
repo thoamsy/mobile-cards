@@ -19,17 +19,18 @@ const ProgressText = TitleText.extend`
   margin-top: 15px;
 `;
 
+const initalState = {
+  currentQuestion: 0,
+  correctCount: 0,
+  modalVisible: false,
+  flip: new Animated.Value(0),
+};
 class Quiz extends Component {
   static navigationOptions = {
     title: 'Quiz',
   };
 
-  state = {
-    currentQuestion: 0,
-    correctCount: 0,
-    modalVisible: false,
-    flip: new Animated.Value(0),
-  };
+  state = initalState;
 
   frontInterpolate = {
     margin: 10,
@@ -59,6 +60,7 @@ class Quiz extends Component {
       },
     ],
   };
+
   componentDidMount = () => {
     this.animatedValue = 0;
     // 用来跟踪当前动画的 value, 因为 Animated.Value 是对象
@@ -67,6 +69,10 @@ class Quiz extends Component {
   componentWillUnmount() {
     this.state.flip.removeAllListeners();
   }
+  quizRestart = () => {
+    this.setState(initalState);
+    this.questions = shuffle(this.questions);
+  };
 
   get modalVisible() {
     return this.state.modalVisible;
@@ -91,7 +97,7 @@ class Quiz extends Component {
     if (!isGranted) {
       Alert.alert('每日提醒', '是否允许明天 21:00 提醒你记得测试呢🤓?', [
         { text: 'Of Course', onPress: setLocalNotification },
-        { text: '不用了, 我很自觉', style: 'cancel' },
+        { text: 'No, I am good', style: 'cancel' },
       ]);
     } else {
       setLocalNotification();
@@ -144,7 +150,12 @@ class Quiz extends Component {
         <ResultModal
           modalVisible={this.modalVisible}
           onCloseModal={this.onHideModal}
-          correctPercentage={`${correctCount / this.totalQuestion * 100}%`}
+          onQuizRestart={this.quizRestart}
+          correctPercentage={`${(
+            correctCount /
+            this.totalQuestion *
+            100
+          ).toFixed(1)}%`}
           correctCount={correctCount}
         />
         <CenterView
